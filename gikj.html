@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spesial Untukmu 💖</title>
+    <!-- Google Fonts: Fredoka & Quicksand -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffc3a0 0%, #ffafbd 50%, #ffc3a0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #5d4037;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Hiasan Latar Belakang (Floating Hearts) */
+        .bg-heart {
+            position: fixed;
+            top: -10%;
+            font-size: 22px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(115vh) rotate(360deg); }
+        }
+
+        /* Tombol Musik Melayang */
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            border: 3px solid #ff758c;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+            font-size: 22px;
+            transition: transform 0.2s;
+        }
+        .music-btn:hover { transform: scale(1.1); }
+
+        /* Container Kartu Ucapan */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 4px dashed #ff8fa3;
+            border-radius: 30px;
+            padding: 35px 25px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(255, 143, 163, 0.35);
+            position: relative;
+            z-index: 10;
+            animation: popIn 0.8s ease-out;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+            display: inline-block;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            font-family: 'Fredoka', cursive;
+            color: #ff4d6d;
+            font-size: 26px;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .message-box {
+            background: #fff0f3;
+            border: 2px solid #ffccd5;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .message-box p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #5d4037;
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        .message-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .footer-text {
+            font-family: 'Fredoka', cursive;
+            font-size: 18px;
+            color: #ff4d6d;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body onclick="playMusicOnFirstClick()">
+
+    <!-- Tombol Musik -->
+    <div class="music-btn" id="musicBtn" onclick="toggleMusic(event)">🎵</div>
+
+    <!-- Audio Musik Latar -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="lagu.mp3" type="audio/mp3">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-688.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Kartu Ucapan Utama -->
+    <div class="card">
+        <div class="icon">💖</div>
+        <h1>Spesial Untukmu ✨</h1>
+
+        <div class="message-box">
+            <p>Halo Sayang, 💕</p>
+            
+            <p>Terima kasih ya sudah hadir dan mengisi hari-hariku dengan warna dan kebahagiaan. Senyumanmu selalu berhasil jadi alasan terbaikku untuk bersyukur setiap hari.</p>
+            
+            <p>Terima kasih sudah sabar, selalu mengerti, dan tetap ada di sisiku. Kamu adalah hal terindah yang pernah datang ke dalam hidupku.</p>
+            
+            <p>Di Girlfriend Day ini (dan di setiap hari lainnya), aku cuma mau kamu tahu kalau kamu sangat berharga dan dicintai. Tetap jadi dirimu yang manis ya!</p>
+        </div>
+
+        <div class="footer-text">
+            I Love You So Much! 🌸✨
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        let hasStarted = false;
+
+        // Mencoba memutar musik otomatis saat halaman dimuat
+        window.addEventListener('DOMContentLoaded', function() {
+            playAudio();
+        });
+
+        // Memastikan musik langsung menyala begitu layar disentuh/diklik pertama kali
+        function playMusicOnFirstClick() {
+            if (!hasStarted) {
+                playAudio();
+                hasStarted = true;
+            }
+        }
+
+        function playAudio() {
+            audio.play().then(function() {
+                musicBtn.innerText = '🎵';
+            }).catch(function() {
+                // Di beberapa browser (seperti HP), autostart musik butuh 1x sentuhan layar
+                musicBtn.innerText = '🔇';
+            });
+        }
+
+        function toggleMusic(e) {
+            e.stopPropagation(); // Mencegah pemicu klik body
+            if (audio.paused) {
+                playAudio();
+            } else {
+                audio.pause();
+                musicBtn.innerText = '🔇';
+            }
+        }
+
+        // Efek Kelopak Bunga / Hati Berguguran
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('bg-heart');
+            heart.innerText = ['❤️', '💖', '🌸', '✨', '💕'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(function() { heart.remove(); }, 6000);
+        }
+        setInterval(createHeart, 350);
+    </script>
+</body>
+</html>
